@@ -13,6 +13,7 @@ import debug from 'debug';
 import helmet from 'helmet';
 import { CommonRoutesConfig } from './modules/common/common.routes.config';
 import { UserRoutes } from './modules/user/user.routes.config';
+import { TodoRoutes } from './modules/todo/todo.routes.config';
 
 const loggerOptions: expressWinston.LoggerOptions = {
   transports: [new winston.transports.Console()],
@@ -52,9 +53,12 @@ export class App {
 
   private initializeRoutes() {
     const userRoutes = new UserRoutes();
+    const todoRoutes = new TodoRoutes();
     this.routes.push(userRoutes);
+    this.routes.push(todoRoutes);
 
     this.app.use(`/api/user`, userRoutes.router);
+    this.app.use(`/api/todo`, todoRoutes.router);
   }
 
   public start(port: number) {
