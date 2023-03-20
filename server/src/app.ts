@@ -12,6 +12,7 @@ import cors from 'cors';
 import debug from 'debug';
 import helmet from 'helmet';
 import { CommonRoutesConfig } from './modules/common/common.routes.config';
+import { UserRoutes } from './modules/user/user.routes.config';
 
 const loggerOptions: expressWinston.LoggerOptions = {
   transports: [new winston.transports.Console()],
@@ -49,7 +50,17 @@ export class App {
     this.app.use(expressWinston.logger(loggerOptions));
   }
 
-  private initializeRoutes() {}
+  private initializeRoutes() {
+    const userRoutes = new UserRoutes();
+    this.routes.push(userRoutes);
+  }
 
-  public start(port: number) {}
+  public start(port: number) {
+    this.server.listen(port, () => {
+      this.debugLog(`Server listening on port ${port}`);
+      this.routes.forEach((route: CommonRoutesConfig) => {
+        this.debugLog(`Routes configured for ${route.getName()}`);
+      });
+    });
+  }
 }
