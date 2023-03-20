@@ -1,4 +1,8 @@
 export interface CreateTodoDto {
   content: string;
-  userId: string;
+  user: string;
+}
+
+export interface UpdateTodoDto {
+  content: string;
 }

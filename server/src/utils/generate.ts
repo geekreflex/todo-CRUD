@@ -8,7 +8,7 @@ const tokenExpirationInSeconds = 36000;
 
 export const generateToken = async (id: string) => {
   try {
-    const token = jwt.sign({ id }, jwtSecret, {
+    const token = jwt.sign({ userId: id }, jwtSecret, {
       expiresIn: tokenExpirationInSeconds,
     });
     return token;

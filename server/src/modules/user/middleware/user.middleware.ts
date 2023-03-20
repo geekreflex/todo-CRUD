@@ -26,6 +26,8 @@ class UserMiddleware {
             ResponseCode.BAD_REQUEST
           );
         }
+      } else {
+        respond(res, {}, 'Invalid email or password', ResponseCode.BAD_REQUEST);
       }
     } catch (error) {
       log('Error', error);

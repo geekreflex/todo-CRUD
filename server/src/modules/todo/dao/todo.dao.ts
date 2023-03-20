@@ -1,6 +1,6 @@
 import mongooseService from '../../common/services/mongoose.service';
 import debug from 'debug';
-import { CreateTodoDto } from '../dtos/todo.dto';
+import { CreateTodoDto, UpdateTodoDto } from '../dtos/todo.dto';
 
 const log: debug.IDebugger = debug('app:todo-dao');
 
@@ -11,7 +11,11 @@ class TodoDao {
   todoSchema = new this.Schema(
     {
       content: { type: String, required: true },
-      userId: { type: this.mongoose.Types.ObjectId, ref: 'User' },
+      user: {
+        type: this.mongoose.Types.ObjectId,
+        ref: 'User',
+        required: true,
+      },
     },
     { timestamps: true }
   );
@@ -30,8 +34,30 @@ class TodoDao {
     return todo.id;
   }
 
+  async getTodos(userId: string) {
+    return await this.Todo.find({ user: userId });
+  }
+
   async getTodoById(todoId: string) {
-    return await this.Todo.findById(todoId);
+    return await this.Todo.findOne({ _id: todoId }).exec();
+  }
+
+  async deleteTodoById(todoId: string) {
+    return await this.Todo.findOneAndDelete({ _id: todoId }).exec();
+  }
+
+  async updateTodoById(
+    todoId: string,
+    userId: string,
+    todoFields: UpdateTodoDto
+  ) {
+    const existingTodo = await this.Todo.findOneAndUpdate(
+      { _id: todoId, user: userId },
+      { $set: todoFields },
+      { new: true }
+    ).exec();
+
+    return existingTodo;
   }
 }
 
