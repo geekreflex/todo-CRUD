@@ -4,6 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "tsc && node --unhandled-rejections=strict ./dist/index.js",
+    "debug": "export DEBUG=* && yarn start",
+    "start:dev": "npx nodemon",
+    "debug:dev": "export DEBUG=* && yarn start:dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

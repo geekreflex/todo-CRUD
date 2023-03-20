@@ -10,6 +10,7 @@ class UserDao {
     {
       fullname: { type: String, required: true },
       email: { type: String, required: true, unique: true },
+      password: { type: String, required: true, select: false },
     },
     { timestamps: true }
   );
@@ -26,6 +27,14 @@ class UserDao {
     });
     await user.save();
     return user.id;
+  }
+
+  async getUserByEmail(email: string) {
+    return await this.User.findOne({ email }).select('+password').exec();
+  }
+
+  async getUserById(userId: string) {
+    return await this.User.findOne({ _id: userId }).exec();
   }
 }
 

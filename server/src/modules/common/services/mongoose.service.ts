@@ -6,7 +6,7 @@ const log: debug.IDebugger = debug('app:mongoose-service');
 class MongooseService {
   private count = 0;
   private mongooseOptions = {};
-  private mongoUri: string = '';
+  private mongoUri = process.env.MONGO_URI as string;
 
   constructor() {
     this.connectWithRetry();

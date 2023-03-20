@@ -53,6 +53,8 @@ export class App {
   private initializeRoutes() {
     const userRoutes = new UserRoutes();
     this.routes.push(userRoutes);
+
+    this.app.use(`/api/user`, userRoutes.router);
   }
 
   public start(port: number) {
