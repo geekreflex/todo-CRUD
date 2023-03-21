@@ -21,6 +21,7 @@ const Todo = () => {
   const [editingTodo, setEditingTodo] = useState<null | TodoData>(null);
   const [editText, setEditText] = useState('');
   const { todos } = useAppSelector((state) => state.todo);
+  const { user } = useAppSelector((state) => state.user);
 
   const completedTodos = todos.filter((todo) => todo.completed);
   const otherTodos = todos.filter((todo) => !todo.completed);
@@ -83,6 +84,8 @@ const Todo = () => {
 
   return (
     <div className="todo-wrap">
+      <h1>Hello, {user?.fullname}</h1>
+      <p>{user?.email}</p>
       <div className="todo-main">
         <div className="todo-form-wrap">
           <form onSubmit={handleCreateTodo}>

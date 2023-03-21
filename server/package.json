@@ -8,7 +8,8 @@
     "debug": "export DEBUG=* && yarn start",
     "start:dev": "npx nodemon",
     "debug:dev": "export DEBUG=* && yarn start:dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -r ts-node/register 'test/**/*.test.ts'",
+    "test-debug": "export DEBUG=* && npm test"
   },
   "keywords": [],
   "author": "",

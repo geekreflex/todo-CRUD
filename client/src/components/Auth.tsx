@@ -91,7 +91,7 @@ const RegisterForm = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button className="btn">Regiter</button>
+      <button className="btn">Register</button>
     </form>
   );
 };
