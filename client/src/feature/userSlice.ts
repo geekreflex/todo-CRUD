@@ -63,6 +63,12 @@ const userSlice = createSlice({
       const json = localStorage.getItem('user');
       state.user = json ? JSON.parse(json) : null;
     },
+
+    logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      location.reload();
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -93,6 +99,7 @@ const userSlice = createSlice({
         state.isAuth = true;
         localStorage.setItem('user', JSON.stringify(action.payload.user));
         localStorage.setItem('token', action.payload.token);
+        location.reload();
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
@@ -101,6 +108,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { getTokenFromStorage, getUserFromStorage } = userSlice.actions;
+export const { getTokenFromStorage, getUserFromStorage, logout } =
+  userSlice.actions;
 
 export default userSlice.reducer;

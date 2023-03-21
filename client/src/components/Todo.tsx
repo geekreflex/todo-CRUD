@@ -108,7 +108,8 @@ const Todo = () => {
                   />
                 ) : (
                   <p
-                    onClick={(e) => onEditing(todo, todo.content)}
+                    title="Click to edit"
+                    onClick={() => onEditing(todo, todo.content)}
                     className={todo.completed ? 'done' : ''}
                   >
                     {todo.content}
@@ -116,15 +117,21 @@ const Todo = () => {
                 )}
               </div>
               <div className="todo-item-btns">
-                {!todo.completed && (
-                  <button title="Edit" onClick={handleUpdateTodo}>
-                    {editingTodo?._id !== todo._id ? (
+                {!todo.completed &&
+                  (editingTodo?._id !== todo._id ? (
+                    <button
+                      title="Edit"
+                      onClick={() => {
+                        onEditing(todo, todo.content);
+                      }}
+                    >
                       <IoPencilSharp />
-                    ) : (
+                    </button>
+                  ) : (
+                    <button onClick={handleUpdateTodo}>
                       <IoCheckmarkDone />
-                    )}
-                  </button>
-                )}
+                    </button>
+                  ))}
                 <button
                   title="Delete"
                   onClick={() => handleDeleteTodo(todo._id)}
