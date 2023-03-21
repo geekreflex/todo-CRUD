@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { LoginFormData, RegisterFormData } from '../types';
-import { BASE_URL } from '../utils/baseUrl';
+import { BASE_URL } from '../utils/constants';
 
 interface User {
   fullname: string;
