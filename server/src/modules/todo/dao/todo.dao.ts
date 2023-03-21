@@ -36,7 +36,9 @@ class TodoDao {
   }
 
   async getTodos(userId: string) {
-    return await this.Todo.find({ user: userId });
+    return await this.Todo.find({ user: userId })
+      .sort({ createdAt: -1 })
+      .exec();
   }
 
   async getTodoById(todoId: string) {
