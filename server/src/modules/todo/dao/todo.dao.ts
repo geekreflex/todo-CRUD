@@ -11,6 +11,7 @@ class TodoDao {
   todoSchema = new this.Schema(
     {
       content: { type: String, required: true },
+      completed: { type: Boolean, required: true, default: false },
       user: {
         type: this.mongoose.Types.ObjectId,
         ref: 'User',

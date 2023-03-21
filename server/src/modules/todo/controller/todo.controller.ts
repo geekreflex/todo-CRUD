@@ -7,6 +7,7 @@ class TodoController {
     const userId = res.locals.jwt.userId;
     const data = {
       content: req.body.content,
+      completed: false,
       user: userId,
     };
     const todoId = await todoDao.createTodo(data);
@@ -20,10 +21,12 @@ class TodoController {
   }
 
   async updateTodo(req: Request, res: Response) {
+    const { content, completed } = req.body;
     const todoId = req.params.todoId;
     const userId = res.locals.jwt.userId;
     const todo = await todoDao.updateTodoById(todoId, userId, {
-      content: req.body.content,
+      content,
+      completed,
     });
     respond(res, { todo }, 'Todo updated');
   }
