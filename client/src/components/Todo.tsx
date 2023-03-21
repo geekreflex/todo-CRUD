@@ -47,6 +47,7 @@ const Todo = () => {
   };
 
   const handleCheck = async (todo: TodoData) => {
+    setEditingTodo(null);
     const payload = {
       _id: todo._id,
       content: todo.content,
@@ -57,12 +58,19 @@ const Todo = () => {
   };
 
   const handleUpdateTodo = async () => {
+    console.log('click');
+    if (editText && editText === editingTodo?.content) {
+      setEditingTodo(null);
+      return;
+    }
+
     if (editingTodo) {
       const payload = {
         _id: editingTodo._id,
         content: editText,
         completed: editingTodo.completed,
       };
+      setEditingTodo(null);
       await dispatch(upddateTodo(payload));
       await dispatch(getTodos());
     }
@@ -89,10 +97,7 @@ const Todo = () => {
         <div className="todo-list-wrap">
           {filtered.map((todo, index) => (
             <div className="todo-item" key={todo._id}>
-              <div
-                className="todo-item-content"
-                onClick={(e) => onEditing(todo, todo.content)}
-              >
+              <div className="todo-item-content">
                 <button onClick={() => handleCheck(todo)}>
                   {todo.completed ? <IoCheckbox /> : <IoCheckboxOutline />}
                 </button>
@@ -102,17 +107,22 @@ const Todo = () => {
                     onChange={(e) => setEditText(e.target.value)}
                   />
                 ) : (
-                  <p className={todo.completed ? 'done' : ''}>{todo.content}</p>
+                  <p
+                    onClick={(e) => onEditing(todo, todo.content)}
+                    className={todo.completed ? 'done' : ''}
+                  >
+                    {todo.content}
+                  </p>
                 )}
               </div>
               <div className="todo-item-btns">
-                {!todo.completed && editingTodo?._id !== todo._id ? (
-                  <button title="Edit">
-                    <IoPencilSharp />
-                  </button>
-                ) : (
-                  <button title="Done">
-                    <IoCheckmarkDone />
+                {!todo.completed && (
+                  <button title="Edit" onClick={handleUpdateTodo}>
+                    {editingTodo?._id !== todo._id ? (
+                      <IoPencilSharp />
+                    ) : (
+                      <IoCheckmarkDone />
+                    )}
                   </button>
                 )}
                 <button
